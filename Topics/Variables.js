@@ -17,3 +17,16 @@ const username = 'deadpool2059'; //we are using it store a username as it should
 }
 
 console.log(`This is username outside the block ${username}`); //checking the username outside the block
+
+// Secondly we have var variable in this the var scope is ouside the block if we declare it in some block and re declare it in other it 
+// will be changed outside too
+
+var password = '2059';
+console.log(`this is the value of var password ${password}`);
+// this is some block to test the var declaration
+{
+  var password = '1396';
+  console.log(`this is the value inside the scope ${password}`);
+}
+//This is the value outside the value the block after declaring it in the block
+console.log(`This is the value of password again out side the block ${password}`);
