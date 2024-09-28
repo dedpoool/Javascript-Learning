@@ -18,7 +18,7 @@ const username = 'deadpool2059'; //we are using it store a username as it should
 
 // let's test by consoling the output in different blocks
 
-{
+{ 
  const username = 'deadpool1396'; //The variable username is redeclare here to check if it can be done or not
 //Let's print it can check
   console.log(`This is the username inside the block ${username}`);
@@ -39,6 +39,6 @@ console.log(`this is the value of var password ${password}`);
 //This is the value outside the value the block after declaring it in the block
 console.log(`This is the value of password again out side the block ${password}`);
 /*
-Prefer not use var
 because of issue in block scope and functional scope
+Prefer not use var
 */
