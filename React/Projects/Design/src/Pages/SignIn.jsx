@@ -104,7 +104,9 @@ export default function SignIn() {
           />
 
           {/* Button */}
-          <Button className="w-full" lable="Sign Up" theme="dark" />
+          <Button className="w-full" theme="dark">
+            Sign Up
+          </Button>
 
           {/* Already have a account login */}
           <h1 className="text-sm">

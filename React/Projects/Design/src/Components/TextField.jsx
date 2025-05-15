@@ -3,7 +3,7 @@ import React from "react";
 export default function TextField({
   onChange = "",
   name = "",
-  type = Text,
+  type = "Text",
   theme,
   errorCode = "normal",
   className = "",

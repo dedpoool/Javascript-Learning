@@ -1,11 +1,6 @@
-import { useContext } from "react";
-import { LoginContext } from "../Data/Contexts";
-function DataTable() {
-  const { userData, setUserData, loginCheck, setLoginCheck } =
-    useContext(LoginContext);
-
+function DataTable({ userData }) {
   return (
-    <div className="w-screen">
+    <div className="">
       <table className="table-auto border-collapse border-2 border-slate-900">
         <thead className="border-2 border-slate-700">
           <tr className="">

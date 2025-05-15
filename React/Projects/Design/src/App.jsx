@@ -3,11 +3,31 @@ import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import SignIn from "./Pages/SignIn";
 import { LoginContext, LoginProvider } from "./Data/Contexts";
-import { Route, Routes, BrowserRouter as Router } from "react-router";
+import {
+  Route,
+  Routes,
+  BrowserRouter as Router,
+  Outlet,
+  Navigate,
+} from "react-router";
+import ErrorPage from "./Pages/ErrorPage";
 
 export default function App() {
   // For checking login state
   const [loginCheck, setLoginCheck] = useState(false);
+
+  // Browser login varibale
+  localStorage.setItem("loginCheck", false);
+
+  // console.log("login check state", loginCheck);
+
+  console.log(
+    "the value of local loginCheck",
+    localStorage.getItem("loginCheck")
+  );
+
+  // for change in the login Check
+  // const loginEffect = useEffect(()=> {},[loginCheck])
 
   // for storing user data
   const [userData, setUserData] = useState([
@@ -20,7 +40,7 @@ export default function App() {
       pincode: "134109",
       state: "Haryana",
       country: "India",
-      email: "vishalmark&@gmail.com",
+      email: "vishalmark7@gmail.com",
       password: "Vishal@1234",
     },
     {
@@ -48,13 +68,50 @@ export default function App() {
       password: "NehaSharma!1234",
     },
   ]);
+
+  // text field data for login
+  const [loginTextFields, setLoginTextFields] = useState({
+    email: "",
+    password: "",
+  });
+
   return (
-    <LoginProvider value={{ userData, setUserData, loginCheck, setLoginCheck }}>
+    <LoginProvider
+      value={{
+        userData,
+        setUserData,
+        loginCheck,
+        setLoginCheck,
+        loginTextFields,
+        setLoginTextFields,
+      }}
+    >
       <Router>
         <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/login" element={<Login />}></Route>
+          <Route
+            path="/"
+            element={
+              localStorage.getItem("loginCheck") == "true" ? (
+                <Home />
+              ) : (
+                <Navigate to={"/login"} />
+              )
+            }
+          ></Route>
+
+          <Route
+            path="/login"
+            element={
+              localStorage.getItem("loginCheck") == "true" ? (
+                <Navigate to={"/"} />
+              ) : (
+                <Login />
+              )
+            }
+          ></Route>
+
           <Route path="/signUp" element={<SignIn />}></Route>
+          <Route path="/*" element={<ErrorPage />}></Route>
         </Routes>
       </Router>
     </LoginProvider>
