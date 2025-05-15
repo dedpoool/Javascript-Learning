@@ -25,8 +25,14 @@ export default function Login() {
 
   // Login Button Function
   const loginButton = () => {
-    const emailSearch = userData.find((items, index) => {
-      return items.email === loginTextFields.email;
+    console.log("Login Button called!");
+
+    userData.find((items) => {
+      return (
+        items.email === loginTextFields.email &&
+        items.password === loginTextFields.password &&
+        localStorage.setItem("loginCheck", true)
+      );
     });
   };
 

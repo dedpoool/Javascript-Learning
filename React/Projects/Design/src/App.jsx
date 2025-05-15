@@ -16,9 +16,6 @@ export default function App() {
   // For checking login state
   const [loginCheck, setLoginCheck] = useState(false);
 
-  // Browser login varibale
-  localStorage.setItem("loginCheck", false);
-
   // console.log("login check state", loginCheck);
 
   console.log(
@@ -90,24 +87,12 @@ export default function App() {
         <Routes>
           <Route
             path="/"
-            element={
-              localStorage.getItem("loginCheck") == "true" ? (
-                <Home />
-              ) : (
-                <Navigate to={"/login"} />
-              )
-            }
+            element={loginCheck ? <Home /> : <Navigate to={"/login"} />}
           ></Route>
 
           <Route
             path="/login"
-            element={
-              localStorage.getItem("loginCheck") == "true" ? (
-                <Navigate to={"/"} />
-              ) : (
-                <Login />
-              )
-            }
+            element={loginCheck ? <Navigate to={"/"} /> : <Login />}
           ></Route>
 
           <Route path="/signUp" element={<SignIn />}></Route>
