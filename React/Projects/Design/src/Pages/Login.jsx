@@ -4,8 +4,7 @@ import ProfileImage from "../Components/ProfileImage";
 import logo from "../Assets/designPortLogo.png";
 import { LoginContext, LoginProvider } from "../Data/Contexts";
 import { useContext } from "react";
-import {Eye} from 'lucide-react';
-
+import { Eye } from "lucide-react";
 
 export default function Login() {
   const {
@@ -18,6 +17,8 @@ export default function Login() {
 
   // update date onchange in text field
   const updateLoginData = (e) => {
+    console.log('the text fileds are updating!');
+    
     let nameData = e.target.name;
     let valueData = e.target.value;
     setLoginTextFields({ ...loginTextFields, [nameData]: valueData });
@@ -29,13 +30,16 @@ export default function Login() {
   const loginButton = () => {
     console.log("Login Button called!");
 
-    userData.find((items) => {
-      return (
-        items.email === loginTextFields.email &&
-        items.password === loginTextFields.password &&
-        localStorage.setItem("loginCheck", true)
-      );
-    });
+    // finding the user and the password is correct?
+    const userTrue = userData.find( (items) => items.email === loginTextFields.email && items.password === loginTextFields.password)
+
+    if(userTrue)
+    {
+      setLoginCheck(true);
+      localStorage.setItem('loginCheck', 1)
+    }
+
+    
   };
 
   return (
@@ -53,16 +57,19 @@ export default function Login() {
         />
 
         {/* Text field container */}
-        <form onSubmit={(e) => {e.preventDefault()}}  className="flex gap-4 w-3/4 flex-col pb-8 items-center">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+          className="flex gap-4 w-3/4 flex-col pb-8 items-center"
+        >
           {/* email */}
           <TextField
-            onChange={updateLoginData}
+            onChange={(e) => updateLoginData}
             className="w-full"
             placeholder="Email"
             name="email"
           />
-
-
 
           {/* Password */}
           <TextField
@@ -71,13 +78,17 @@ export default function Login() {
             placeholder="Password"
             onChange={updateLoginData}
             name="password"
-          >
-          
+            showPasswordIcon ={true}
             
-            </TextField>
+          ></TextField>
 
           {/* Button */}
-          <Button type='submit' onClick={loginButton} theme="dark" className="w-full">
+          <Button
+            type="submit"
+            onClick={loginButton}
+            theme="dark"
+            className="w-full"
+          >
             Login
           </Button>
 

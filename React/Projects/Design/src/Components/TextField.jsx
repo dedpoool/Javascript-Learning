@@ -6,11 +6,13 @@ export default function TextField({
   onChange = "",
   name = "",
   type = "text",
-  showPasswordIcon = true,
+  showPasswordIcon = false,
   passwordValidator = true,
+  underLabel = '',
   theme,
   errorCode = "normal",
   className = "",
+  foucusBorder = true,
   ...attributes
 })
 {
@@ -23,6 +25,7 @@ setShowPassword(!showPassword);
   }
 
   return (
+    <div className="w-full flex flex-col gap-2">
     <div className="w-full flex relative items-center justify-end">
       
 
@@ -37,6 +40,8 @@ setShowPassword(!showPassword);
       </div>
       }
 
+      
+
       <input
         name={name}
         onChange={(e) => {
@@ -48,10 +53,15 @@ setShowPassword(!showPassword);
         }
         ${errorCode == "red" && "border-red-500"}
         ${errorCode == "green" && "border-green-500"}
+        ${foucusBorder && 'outline-none'}
         ${className}`}
         {...attributes}
       />
-      
     </div>
+    {underLabel !== '' && 
+      <h1 className="text-xs text-red-500 font-medium ml-1">{underLabel}</h1>
+    }
+    </div>
+    
   );
 }

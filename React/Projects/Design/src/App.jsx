@@ -14,20 +14,12 @@ import ErrorPage from "./Pages/ErrorPage";
 
 export default function App() {
 
-localStorage.setItem('loginCheck', true);
+
+  //Making a loginCheckVariable in the local storage if there is not!
+localStorage.getItem('loginCheck') == undefined && localStorage.setItem('loginCheck', false);
 
   // For checking login state
-  const [loginCheck, setLoginCheck] = useState(false);
-
-  // console.log("login check state", loginCheck);
-
-  console.log(
-    "the value of local loginCheck",
-    localStorage.getItem("loginCheck")
-  );
-
-  // for change in the login Check
-  // const loginEffect = useEffect(()=> {},[loginCheck])
+  const [loginCheck, setLoginCheck] = useState(Boolean(Number(localStorage.getItem('loginCheck'))));
 
   // for storing user data
   const [userData, setUserData] = useState([
@@ -75,6 +67,19 @@ localStorage.setItem('loginCheck', true);
     password: "",
   });
 
+
+  // text field data for the sign up form
+  const [signUpTextFields, setSignUpTextFields] = useState({firstName: "",
+      lastName: "",
+      age: "",
+      address: "",
+      city: "",
+      pincode: "",
+      state: "",
+      country: "",
+      email: "",
+      password: ""})
+
   return (
     <LoginProvider
       value={{
@@ -84,18 +89,20 @@ localStorage.setItem('loginCheck', true);
         setLoginCheck,
         loginTextFields,
         setLoginTextFields,
+        signUpTextFields,
+        setSignUpTextFields
       }}
     >
       <Router>
         <Routes>
           <Route
             path="/"
-            element={loginCheck ? <Home /> : <Navigate to={"/login"} />}
+            element={loginCheck === true ? <Home /> : <Navigate to={"/login"} />}
           ></Route>
 
           <Route
             path="/login"
-            element={loginCheck ? <Navigate to={"/"} /> : <Login />}
+            element={loginCheck === true ? <Navigate to={"/"} /> : <Login />}
           ></Route>
 
           <Route path="/signUp" element={<SignIn />}></Route>

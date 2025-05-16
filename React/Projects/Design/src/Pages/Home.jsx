@@ -12,7 +12,7 @@ export default function Home() {
   const SignOutButton = () => {
     setLoginCheck(false);
     console.log("Signout button called!");
-    localStorage.setItem("loginCheck", false);
+    localStorage.setItem("loginCheck", 0);
   };
 
   return (
