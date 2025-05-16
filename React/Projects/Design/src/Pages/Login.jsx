@@ -4,6 +4,8 @@ import ProfileImage from "../Components/ProfileImage";
 import logo from "../Assets/designPortLogo.png";
 import { LoginContext, LoginProvider } from "../Data/Contexts";
 import { useContext } from "react";
+import {Eye} from 'lucide-react';
+
 
 export default function Login() {
   const {
@@ -51,7 +53,7 @@ export default function Login() {
         />
 
         {/* Text field container */}
-        <div className="flex gap-4 w-3/4 flex-col pb-8 items-center">
+        <form onSubmit={(e) => {e.preventDefault()}}  className="flex gap-4 w-3/4 flex-col pb-8 items-center">
           {/* email */}
           <TextField
             onChange={updateLoginData}
@@ -60,6 +62,8 @@ export default function Login() {
             name="email"
           />
 
+
+
           {/* Password */}
           <TextField
             type="password"
@@ -67,10 +71,13 @@ export default function Login() {
             placeholder="Password"
             onChange={updateLoginData}
             name="password"
-          />
+          >
+          
+            
+            </TextField>
 
           {/* Button */}
-          <Button onClick={loginButton} theme="dark" className="w-full">
+          <Button type='submit' onClick={loginButton} theme="dark" className="w-full">
             Login
           </Button>
 
@@ -78,7 +85,7 @@ export default function Login() {
           <h1 className="text-sm text-slate-700">
             New to this? <span className="font-bold">Sign up</span>
           </h1>
-        </div>
+        </form>
       </div>
     </div>
   );

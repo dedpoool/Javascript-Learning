@@ -27,12 +27,11 @@ function DataTable({ userData }) {
               <td id={index}>{items.country}</td>
               <td id={index}>{items.password}</td>
               <td id={index}>{items.age}</td>
-            </tr>,
+            </tr>
           ])}
         </tbody>
       </table>
     </div>
-  );
-}
+  );}
 
 export default DataTable;

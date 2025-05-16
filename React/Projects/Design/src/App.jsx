@@ -13,6 +13,9 @@ import {
 import ErrorPage from "./Pages/ErrorPage";
 
 export default function App() {
+
+localStorage.setItem('loginCheck', true);
+
   // For checking login state
   const [loginCheck, setLoginCheck] = useState(false);
 
