@@ -71,7 +71,6 @@ localStorage.getItem('loginCheck') == undefined && localStorage.setItem('loginCh
   // text field data for the sign up form
   const [signUpTextFields, setSignUpTextFields] = useState({firstName: "",
       lastName: "",
-      age: "",
       address: "",
       city: "",
       pincode: "",

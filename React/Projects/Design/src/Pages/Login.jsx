@@ -4,7 +4,8 @@ import ProfileImage from "../Components/ProfileImage";
 import logo from "../Assets/designPortLogo.png";
 import { LoginContext, LoginProvider } from "../Data/Contexts";
 import { useContext } from "react";
-import { Eye } from "lucide-react";
+import { Eye} from "lucide-react";
+import {Link} from 'react-router'
 
 export default function Login() {
   const {
@@ -17,8 +18,8 @@ export default function Login() {
 
   // update date onchange in text field
   const updateLoginData = (e) => {
-    console.log('the text fileds are updating!');
-    
+    console.log("the text fileds are updating!");
+
     let nameData = e.target.name;
     let valueData = e.target.value;
     setLoginTextFields({ ...loginTextFields, [nameData]: valueData });
@@ -31,15 +32,16 @@ export default function Login() {
     console.log("Login Button called!");
 
     // finding the user and the password is correct?
-    const userTrue = userData.find( (items) => items.email === loginTextFields.email && items.password === loginTextFields.password)
+    const userTrue = userData.find(
+      (items) =>
+        items.email === loginTextFields.email &&
+        items.password === loginTextFields.password
+    );
 
-    if(userTrue)
-    {
+    if (userTrue) {
       setLoginCheck(true);
-      localStorage.setItem('loginCheck', 1)
+      localStorage.setItem("loginCheck", 1);
     }
-
-    
   };
 
   return (
@@ -78,8 +80,7 @@ export default function Login() {
             placeholder="Password"
             onChange={updateLoginData}
             name="password"
-            showPasswordIcon ={true}
-            
+            showPasswordIcon={true}
           ></TextField>
 
           {/* Button */}
@@ -94,7 +95,7 @@ export default function Login() {
 
           {/* New to this sign up */}
           <h1 className="text-sm text-slate-700">
-            New to this? <span className="font-bold">Sign up</span>
+            New to this? <Link className="font-bold" to={'/signUp'}>SignUp</Link>
           </h1>
         </form>
       </div>

@@ -6,21 +6,23 @@ import ProfileImage from "../Components/ProfileImage";
 import logo from "../Assets/designPortLogo.png";
 import { LoginContext } from "../Data/Contexts";
 import PasswordValueCheck from "../Components/PasswordValueCheck";
+import {Link} from 'react-router'
 
 export default function SignIn() {
-
-  // password textfiled colours
-  const [confirmPassword,setConfirmPassword] = useState({createPassword:'normal',confirmPassword:'normal',showSuggestions:false});
-
-
+  // Context for global state updates 🍑
   const { setSignUpTextFields, signUpTextFields } = useContext(LoginContext);
 
-  // useState for signup for that the signup form is good to go
+  // password textfiled border color and show suggestions state 🍑
+  const [confirmPassword, setConfirmPassword] = useState({
+    createPassword: "normal",
+    confirmPassword: "normal",
+    showSuggestions: false,
+  });
+
+  // useState for signup if all the signup form is good to go 🍑
   const [signUpFromFlag, setSignUpFormFlag] = useState(false);
 
-  console.log("sing up flag: ", signUpFromFlag);
-
-  // useState For password validator
+  // useState For password validator 🍑
   const [passwordValidations, setPasswordValidations] = useState({
     numChar: false,
     char8: false,
@@ -30,20 +32,14 @@ export default function SignIn() {
     charLess20: false,
   });
 
-  // password validator function
+  // password validator function 🌕
   const passwordValidator = (password) => {
+    const passLength = password.length; // password length
 
-    
-    const passLength = password.length;    // password length
-
-    console.log('show suggestion Before:',confirmPassword.showSuggestions);
-    
-    
-    setConfirmPassword({...confirmPassword,showSuggestions:true});  //show suggestions for the password
-    
-    console.log('show suggestion After:',confirmPassword.showSuggestions);
+    setConfirmPassword({ ...confirmPassword, showSuggestions: true }); //show suggestions for the password
 
     setPasswordValidations({
+      //setting the new values for the password validation object
       ...passwordValidations,
       capChar: /[A-Z]/.test(password),
       specialChar: /[!@#$%^&*]/.test(password),
@@ -51,8 +47,6 @@ export default function SignIn() {
       smallChar: /[a-z]/.test(password),
       char8: passLength >= 8,
     });
-    // console the values
-    console.log("Password Validations:", { ...passwordValidations });
 
     return (
       passwordValidations.capChar &&
@@ -63,20 +57,52 @@ export default function SignIn() {
     );
   };
 
-  // text input on change handle function
+  // text input on change handle function 🌕
   const updateSignUpTextFields = (e) => {
-    console.log("value of name", e.target.name);
-    console.log("value of value", e.target.value);
-
     const inputValue = e.target.value;
     const inputName = e.target.name;
 
-    // If the target is password
-    inputName == "password" && passwordValidator(inputValue)
-      ? setConfirmPassword({...confirmPassword,createPassword:'green'})
-      : setConfirmPassword({...confirmPassword,createPassword:'red'});
-    setSignUpTextFields({ ...signUpTextFields, [inputName]: inputValue });
+    // If the target is password so we can validate ❓
+    inputName === "password" && passwordValidator(inputValue)
+      ? setConfirmPassword({
+          ...confirmPassword,
+          createPassword: "green",
+          showSuggestions: false,
+        })
+      : inputName === "password" && passwordValidator(inputValue) == false
+      ? setConfirmPassword({
+          ...confirmPassword,
+          createPassword: "red",
+          showSuggestions: true,
+        })
+      : setConfirmPassword({
+          ...confirmPassword,
+          createPassword: "normal",
+          showSuggestions: false,
+        });
+
+    setSignUpTextFields({ ...signUpTextFields, [inputName]: inputValue }); //updating the values in state from text fields
   };
+
+  // Match Password Function 🌕
+  const matchPasswords = (e) => {
+    signUpTextFields.password === e.target.value
+      ? setConfirmPassword({ ...confirmPassword, confirmPassword: "green" })
+      : setConfirmPassword({ ...confirmPassword, confirmPassword: "red" });
+  };
+
+  // Check the form if it contains all the values🌕
+  const checkSubmitForm = () => {
+    // console.log("Signup text fields keys: ", Object.keys(signUpTextFields));
+    // console.log("Signup text fields values: ", Object.values(signUpTextFields));
+
+   setSignUpFormFlag(Object.values(signUpTextFields).find((value) => value != '') && confirmPassword.createPassword === 'green' && confirmPassword.confirmPassword === 'green')
+
+
+    console.log("does the sign up form contains any blank value:", signUpFromFlag);
+  };
+
+  // The JSX code ⬇️⬇️⬇️⬇️⬇️⬇️
 
   return (
     <div className="w-full bg-black h-screen flex items-center justify-center">
@@ -115,7 +141,7 @@ export default function SignIn() {
           {/* Email */}
           <TextField
             className="w-full"
-            type="text"
+            type="email"
             placeholder="Email"
             theme=""
             onChange={updateSignUpTextFields}
@@ -191,25 +217,25 @@ export default function SignIn() {
           />
 
           {/* for passowrd validation */}
-          {confirmPassword.showSuggestions && 
-          <div className="flex flex-wrap gap-x-3 gap-y-2 pl-4">
-            <PasswordValueCheck valid={passwordValidations.smallChar}>
-              small character
-            </PasswordValueCheck>
-            <PasswordValueCheck valid={passwordValidations.capChar}>
-              upper-case character A-Z
-            </PasswordValueCheck>
-            <PasswordValueCheck valid={passwordValidations.char8}>
-              8 characters
-            </PasswordValueCheck>
-            <PasswordValueCheck valid={passwordValidations.specialChar}>
-              special character
-            </PasswordValueCheck>
-            <PasswordValueCheck valid={passwordValidations.numChar}>
-              number 1-0
-            </PasswordValueCheck>
-          </div>
-          }
+          {confirmPassword.showSuggestions && (
+            <div className="flex flex-wrap gap-x-3 gap-y-2 pl-4 ">
+              <PasswordValueCheck valid={passwordValidations.smallChar}>
+                small character
+              </PasswordValueCheck>
+              <PasswordValueCheck valid={passwordValidations.capChar}>
+                upper-case character A-Z
+              </PasswordValueCheck>
+              <PasswordValueCheck valid={passwordValidations.char8}>
+                8 characters
+              </PasswordValueCheck>
+              <PasswordValueCheck valid={passwordValidations.specialChar}>
+                special character
+              </PasswordValueCheck>
+              <PasswordValueCheck valid={passwordValidations.numChar}>
+                number 1-0
+              </PasswordValueCheck>
+            </div>
+          )}
 
           {/* Confirm Password */}
           <TextField
@@ -217,19 +243,20 @@ export default function SignIn() {
             type="password"
             placeholder="Confirm Password"
             theme=""
-            errorCode=""
+            errorCode={confirmPassword.confirmPassword}
             name="confirmPassword"
             showPasswordIcon={true}
+            onChange={matchPasswords}
           />
 
           {/* Button */}
-          <Button className="w-full" theme="dark">
+          <Button className="w-full" theme="dark" onClick={checkSubmitForm}>
             Sign Up
           </Button>
 
           {/* Already have a account login */}
           <h1 className="text-sm">
-            Already have a account? <span>Login</span>
+            Already have a account? <Link className="font-bold" to={'/login'}>Login</Link>
           </h1>
         </div>
       </div>
