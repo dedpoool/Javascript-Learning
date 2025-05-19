@@ -1,7 +1,9 @@
-function DataTable({ userData }) {
+function DataTable({ userData, className }) {
   return (
     <div className="">
-      <table className="table-auto border-collapse border-2 border-slate-900">
+      <table
+        className={`table-auto border-collapse border-2 border-slate-900 ${className}`}
+      >
         <thead className="border-2 border-slate-700">
           <tr className="">
             <th>First Name</th>
@@ -27,11 +29,12 @@ function DataTable({ userData }) {
               <td id={index}>{items.country}</td>
               <td id={index}>{items.password}</td>
               <td id={index}>{items.age}</td>
-            </tr>
+            </tr>,
           ])}
         </tbody>
       </table>
     </div>
-  );}
+  );
+}
 
 export default DataTable;

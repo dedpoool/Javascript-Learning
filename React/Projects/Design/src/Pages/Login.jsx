@@ -4,8 +4,8 @@ import ProfileImage from "../Components/ProfileImage";
 import logo from "../Assets/designPortLogo.png";
 import { LoginContext, LoginProvider } from "../Data/Contexts";
 import { useContext } from "react";
-import { Eye} from "lucide-react";
-import {Link} from 'react-router'
+import { Eye } from "lucide-react";
+import { Link } from "react-router";
 
 export default function Login() {
   const {
@@ -67,7 +67,7 @@ export default function Login() {
         >
           {/* email */}
           <TextField
-            onChange={(e) => updateLoginData}
+            onChange={updateLoginData}
             className="w-full"
             placeholder="Email"
             name="email"
@@ -95,7 +95,10 @@ export default function Login() {
 
           {/* New to this sign up */}
           <h1 className="text-sm text-slate-700">
-            New to this? <Link className="font-bold" to={'/signUp'}>SignUp</Link>
+            New to this?{" "}
+            <Link className="font-bold" to={"/signUp"}>
+              SignUp
+            </Link>
           </h1>
         </form>
       </div>

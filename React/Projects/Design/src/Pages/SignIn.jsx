@@ -6,11 +6,13 @@ import ProfileImage from "../Components/ProfileImage";
 import logo from "../Assets/designPortLogo.png";
 import { LoginContext } from "../Data/Contexts";
 import PasswordValueCheck from "../Components/PasswordValueCheck";
-import {Link} from 'react-router'
+import { Link } from "react-router";
+import DataTable from "../Components/DataTable";
 
 export default function SignIn() {
   // Context for global state updates 🍑
-  const { setSignUpTextFields, signUpTextFields } = useContext(LoginContext);
+  const { setSignUpTextFields, signUpTextFields, userData, setUserData } =
+    useContext(LoginContext);
 
   // password textfiled border color and show suggestions state 🍑
   const [confirmPassword, setConfirmPassword] = useState({
@@ -36,7 +38,16 @@ export default function SignIn() {
   const passwordValidator = (password) => {
     const passLength = password.length; // password length
 
-    setConfirmPassword({ ...confirmPassword, showSuggestions: true }); //show suggestions for the password
+    console.log("length of password: ", passLength);
+
+    // setConfirmPassword({ ...confirmPassword, showSuggestions: true }); //show suggestions for the password
+
+    const capChar = /[A-Z]/.test(password);
+    const specialChar = /[!@#$%^&*]/.test(password);
+    const numChar = /[0-9]/.test(password);
+    const smallChar = /[a-z]/.test(password);
+    const char8 = passLength >= 8;
+    const charLess20 = passLength <= 20;
 
     setPasswordValidations({
       //setting the new values for the password validation object
@@ -46,22 +57,27 @@ export default function SignIn() {
       numChar: /[0-9]/.test(password),
       smallChar: /[a-z]/.test(password),
       char8: passLength >= 8,
+      charLess20: passLength <= 20,
     });
 
     return (
-      passwordValidations.capChar &&
-      passwordValidations.specialChar &&
-      passwordValidations.numChar &&
-      passwordValidations.smallChar &&
-      passwordValidations.char8
+      capChar && specialChar && numChar && smallChar && char8 && charLess20
     );
+
+    // return passwordValidations;
   };
+  console.log("showconfir,>>>", confirmPassword);
 
   // text input on change handle function 🌕
   const updateSignUpTextFields = (e) => {
     const inputValue = e.target.value;
     const inputName = e.target.name;
 
+    console.log("Input Vlaue ^^^^", inputValue);
+
+    console.log(">>>>", inputName);
+
+    console.log(">>onchange", passwordValidator(inputValue));
     // If the target is password so we can validate ❓
     inputName === "password" && passwordValidator(inputValue)
       ? setConfirmPassword({
@@ -69,23 +85,23 @@ export default function SignIn() {
           createPassword: "green",
           showSuggestions: false,
         })
-      : inputName === "password" && passwordValidator(inputValue) == false
-      ? setConfirmPassword({
+      : inputName === "password" &&
+        !passwordValidator(inputValue) &&
+        setConfirmPassword({
           ...confirmPassword,
           createPassword: "red",
           showSuggestions: true,
-        })
-      : setConfirmPassword({
-          ...confirmPassword,
-          createPassword: "normal",
-          showSuggestions: false,
         });
 
     setSignUpTextFields({ ...signUpTextFields, [inputName]: inputValue }); //updating the values in state from text fields
+
+    checkSubmitForm();
   };
 
   // Match Password Function 🌕
   const matchPasswords = (e) => {
+    console.log("Match password called!");
+
     signUpTextFields.password === e.target.value
       ? setConfirmPassword({ ...confirmPassword, confirmPassword: "green" })
       : setConfirmPassword({ ...confirmPassword, confirmPassword: "red" });
@@ -96,16 +112,41 @@ export default function SignIn() {
     // console.log("Signup text fields keys: ", Object.keys(signUpTextFields));
     // console.log("Signup text fields values: ", Object.values(signUpTextFields));
 
-   setSignUpFormFlag(Object.values(signUpTextFields).find((value) => value != '') && confirmPassword.createPassword === 'green' && confirmPassword.confirmPassword === 'green')
+    const blankValue = Object.values(signUpTextFields).find(
+      (value) => value === ""
+    );
 
+    console.log("value of black value:", blankValue);
 
-    console.log("does the sign up form contains any blank value:", signUpFromFlag);
+    let signUpFlag =
+      blankValue === undefined &&
+      confirmPassword.createPassword === "green" &&
+      confirmPassword.confirmPassword === "green";
+
+    setSignUpFormFlag(signUpFlag);
+    console.log("does the sign up form contains any blank value:", signUpFlag);
+  };
+
+  // Submit all the data to state☀️
+  const submitData = () => {
+    console.log("submit data fuctionis called ");
+
+    console.log("data we have: ", signUpTextFields);
+    console.log(">>>>", userData);
+    const data = [...userData];
+    data.push(signUpTextFields);
+    setUserData(data);
+
+    // setUserData([...userData, signUpTextFields]);
+
+    // console.log("value of user data after update: ", ...userData);
   };
 
   // The JSX code ⬇️⬇️⬇️⬇️⬇️⬇️
 
   return (
     <div className="w-full bg-black h-screen flex items-center justify-center">
+      {/* <DataTable className="text-white" userData={userData} /> */}
       {/* Image Container */}
       <div className="w-1/2"></div>
 
@@ -250,13 +291,16 @@ export default function SignIn() {
           />
 
           {/* Button */}
-          <Button className="w-full" theme="dark" onClick={checkSubmitForm}>
+          <Button className="w-full" theme="dark" onClick={submitData}>
             Sign Up
           </Button>
 
           {/* Already have a account login */}
           <h1 className="text-sm">
-            Already have a account? <Link className="font-bold" to={'/login'}>Login</Link>
+            Already have a account?{" "}
+            <Link className="font-bold" to={"/login"}>
+              Login
+            </Link>
           </h1>
         </div>
       </div>
