@@ -1,36 +1,29 @@
+import { useState } from "react";
 function DataTable({ userData, className }) {
+  // state for diffrent colours for the row
+  const [rowColour, setRowColour] = useState(true);
+
   return (
     <div className="">
       <table
         className={`table-auto border-collapse border-2 border-slate-900 ${className}`}
       >
-        <thead className="border-2 border-slate-700">
+        <thead className="border-2 border-slate-700 p-4">
           <tr className="">
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Address</th>
-            <th>city</th>
-            <th>Pincode</th>
-            <th>Counthy</th>
-            <th>Password</th>
-            <th>age</th>
+            {Object.keys(...userData).map((item) => (
+              <th className="px-4 py-2 text-left">{item}</th>
+            ))}
           </tr>
         </thead>
+
         <tbody className="">
-          {userData.map((items, index) => [
-            <tr id={index} className="border-t-2 border-slate-300 p-4">
-              <td id={index}>{items.firstName}</td>
-              <td id={index}>{items.lastName}</td>
-              <td id={index}>{items.email}</td>
-              <td id={index}>{items.address}</td>
-              <td id={index}>{items.city}</td>
-              <td id={index}>{items.pincode}</td>
-              <td id={index}>{items.country}</td>
-              <td id={index}>{items.password}</td>
-              <td id={index}>{items.age}</td>
-            </tr>,
-          ])}
+          {userData.map((item) => (
+            <tr className={`p-4 ${rowColour ? "bg-blue-600" : "bg-slate-600"}`}>
+              {Object.values(item).map((itemChild) => (
+                <td className="p-4">{itemChild}</td>
+              ))}
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

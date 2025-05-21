@@ -24,6 +24,13 @@ export default function SignIn() {
   // useState for signup if all the signup form is good to go 🍑
   const [signUpFromFlag, setSignUpFormFlag] = useState(false);
 
+
+
+  // Contains duplicate email
+  const [userExists, setUserExistes] = useState(false);
+
+
+
   // useState For password validator 🍑
   const [passwordValidations, setPasswordValidations] = useState({
     numChar: false,
@@ -66,18 +73,13 @@ export default function SignIn() {
 
     // return passwordValidations;
   };
-  console.log("showconfir,>>>", confirmPassword);
 
   // text input on change handle function 🌕
   const updateSignUpTextFields = (e) => {
     const inputValue = e.target.value;
     const inputName = e.target.name;
 
-    console.log("Input Vlaue ^^^^", inputValue);
 
-    console.log(">>>>", inputName);
-
-    console.log(">>onchange", passwordValidator(inputValue));
     // If the target is password so we can validate ❓
     inputName === "password" && passwordValidator(inputValue)
       ? setConfirmPassword({
@@ -116,9 +118,14 @@ export default function SignIn() {
       (value) => value === ""
     );
 
-    console.log("value of black value:", blankValue);
+    const existedUser = userData.find((item) => item.email === signUpTextFields.email);
 
-    let signUpFlag =
+    setUserExistes(existedUser != undefined);
+
+    console.log('Does user exists?: ',existedUser != undefined);
+    
+
+    let signUpFlag = existedUser != undefined &&
       blankValue === undefined &&
       confirmPassword.createPassword === "green" &&
       confirmPassword.confirmPassword === "green";
@@ -129,17 +136,11 @@ export default function SignIn() {
 
   // Submit all the data to state☀️
   const submitData = () => {
+    
     console.log("submit data fuctionis called ");
-
-    console.log("data we have: ", signUpTextFields);
-    console.log(">>>>", userData);
     const data = [...userData];
     data.push(signUpTextFields);
     setUserData(data);
-
-    // setUserData([...userData, signUpTextFields]);
-
-    // console.log("value of user data after update: ", ...userData);
   };
 
   // The JSX code ⬇️⬇️⬇️⬇️⬇️⬇️
@@ -186,7 +187,7 @@ export default function SignIn() {
             placeholder="Email"
             theme=""
             onChange={updateSignUpTextFields}
-            errorCode=""
+            errorCode={userExists ? 'red': 'normal'}
             name="email"
           />
 

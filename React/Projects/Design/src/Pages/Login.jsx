@@ -2,8 +2,9 @@ import TextField from "../Components/TextField";
 import Button from "../Components/Button";
 import ProfileImage from "../Components/ProfileImage";
 import logo from "../Assets/designPortLogo.png";
+import blueBG from "../Assets/blue_abstract_art.jpg";
 import { LoginContext, LoginProvider } from "../Data/Contexts";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Eye } from "lucide-react";
 import { Link } from "react-router";
 
@@ -16,7 +17,10 @@ export default function Login() {
     setLoginTextFields,
   } = useContext(LoginContext);
 
-  // update date onchange in text field
+  // if the user does not exists
+  const [userExists,setUserExists] =useState(true);
+
+  // update date onchange in text field🌕
   const updateLoginData = (e) => {
     console.log("the text fileds are updating!");
 
@@ -28,7 +32,7 @@ export default function Login() {
   console.log("Value of Login ", loginTextFields);
 
   // Login Button Function
-  const loginButton = () => {
+  const handleLoginButton = () => {
     console.log("Login Button called!");
 
     // finding the user and the password is correct?
@@ -42,12 +46,17 @@ export default function Login() {
       setLoginCheck(true);
       localStorage.setItem("loginCheck", 1);
     }
+    else{
+      setUserExists(false);
+    }
   };
 
   return (
     <div className="flex w-screen h-screen">
       {/* Image Container */}
-      <div className="w-1/2 bg-black"></div>
+      <div className="w-1/2 bg-black">
+      <img className="size-full" src={blueBG} alt="" />
+      </div>
 
       {/* Data container */}
       <div className="flex justify-center items-center flex-col w-1/2">
@@ -67,6 +76,8 @@ export default function Login() {
         >
           {/* email */}
           <TextField
+          underLabel={!userExists && "User Email does not exists!"}
+          errorCode={!userExists ? 'red':'normal'}
             onChange={updateLoginData}
             className="w-full"
             placeholder="Email"
@@ -86,7 +97,7 @@ export default function Login() {
           {/* Button */}
           <Button
             type="submit"
-            onClick={loginButton}
+            onClick={handleLoginButton}
             theme="dark"
             className="w-full"
           >
