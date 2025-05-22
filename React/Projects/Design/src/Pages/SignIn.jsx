@@ -24,12 +24,8 @@ export default function SignIn() {
   // useState for signup if all the signup form is good to go 🍑
   const [signUpFromFlag, setSignUpFormFlag] = useState(false);
 
-
-
   // Contains duplicate email
   const [userExists, setUserExistes] = useState(false);
-
-
 
   // useState For password validator 🍑
   const [passwordValidations, setPasswordValidations] = useState({
@@ -39,6 +35,7 @@ export default function SignIn() {
     capChar: false,
     smallChar: false,
     charLess20: false,
+    emailTaken: false,
   });
 
   // password validator function 🌕
@@ -79,7 +76,6 @@ export default function SignIn() {
     const inputValue = e.target.value;
     const inputName = e.target.name;
 
-
     // If the target is password so we can validate ❓
     inputName === "password" && passwordValidator(inputValue)
       ? setConfirmPassword({
@@ -95,7 +91,9 @@ export default function SignIn() {
           showSuggestions: true,
         });
 
-    setSignUpTextFields({ ...signUpTextFields, [inputName]: inputValue }); //updating the values in state from text fields
+    // email validator
+    inputName === "email" &&
+      setSignUpTextFields({ ...signUpTextFields, [inputName]: inputValue }); //updating the values in state from text fields
 
     checkSubmitForm();
   };
@@ -118,15 +116,18 @@ export default function SignIn() {
       (value) => value === ""
     );
 
-    const existedUser = userData.find((item) => item.email === signUpTextFields.email);
+    const existedUser = userData.find(
+      (item) => item.email === signUpTextFields.email
+    );
 
     setUserExistes(existedUser != undefined);
 
-    console.log('Does user exists?: ',existedUser != undefined);
-    
+    console.log("Does user exists?: ", existedUser != undefined);
 
-    let signUpFlag = existedUser != undefined &&
+    let signUpFlag =
+      existedUser != undefined &&
       blankValue === undefined &&
+      passwordValidations.signUpFlag &&
       confirmPassword.createPassword === "green" &&
       confirmPassword.confirmPassword === "green";
 
@@ -136,11 +137,11 @@ export default function SignIn() {
 
   // Submit all the data to state☀️
   const submitData = () => {
-    
-    console.log("submit data fuctionis called ");
+    signUpFromFlag && console.log("submit data fuctionis called ");
     const data = [...userData];
     data.push(signUpTextFields);
     setUserData(data);
+    localStorage.setItem("userData", JSON.stringify(userData));
   };
 
   // The JSX code ⬇️⬇️⬇️⬇️⬇️⬇️
@@ -187,7 +188,7 @@ export default function SignIn() {
             placeholder="Email"
             theme=""
             onChange={updateSignUpTextFields}
-            errorCode={userExists ? 'red': 'normal'}
+            errorCode={userExists ? "red" : "normal"}
             name="email"
           />
 

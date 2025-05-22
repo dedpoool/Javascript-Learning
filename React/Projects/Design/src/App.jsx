@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import SignIn from "./Pages/SignIn";
+import AllUsers from "./Layouts/AllUsers";
 import { LoginContext, LoginProvider } from "./Data/Contexts";
 import {
   Route,
@@ -11,15 +12,17 @@ import {
   Navigate,
 } from "react-router";
 import ErrorPage from "./Pages/ErrorPage";
+import AllPosts from "./Layouts/AllPosts";
 
 export default function App() {
-
-
   //Making a loginCheckVariable in the local storage if there is not!
-localStorage.getItem('loginCheck') == undefined && localStorage.setItem('loginCheck', false);
+  localStorage.getItem("loginCheck") == undefined &&
+    localStorage.setItem("loginCheck", false);
 
   // For checking login state
-  const [loginCheck, setLoginCheck] = useState(Boolean(Number(localStorage.getItem('loginCheck'))));
+  const [loginCheck, setLoginCheck] = useState(
+    Boolean(Number(localStorage.getItem("loginCheck")))
+  );
 
   // for storing user data
   const [userData, setUserData] = useState([
@@ -67,17 +70,18 @@ localStorage.getItem('loginCheck') == undefined && localStorage.setItem('loginCh
     password: "",
   });
 
-
   // text field data for the sign up form
-  const [signUpTextFields, setSignUpTextFields] = useState({firstName: "",
-      lastName: "",
-      address: "",
-      city: "",
-      pincode: "",
-      state: "",
-      country: "",
-      email: "",
-      password: ""})
+  const [signUpTextFields, setSignUpTextFields] = useState({
+    firstName: "",
+    lastName: "",
+    address: "",
+    city: "",
+    pincode: "",
+    state: "",
+    country: "",
+    email: "",
+    password: "",
+  });
 
   return (
     <LoginProvider
@@ -89,15 +93,20 @@ localStorage.getItem('loginCheck') == undefined && localStorage.setItem('loginCh
         loginTextFields,
         setLoginTextFields,
         signUpTextFields,
-        setSignUpTextFields
+        setSignUpTextFields,
       }}
     >
       <Router>
         <Routes>
           <Route
             path="/"
-            element={loginCheck === true ? <Home /> : <Navigate to={"/login"} />}
-          ></Route>
+            element={
+              loginCheck === true ? <Home /> : <Navigate to={"/login"} />
+            }
+          >
+            <Route path="/allUsers" element={<AllUsers />} />
+            <Route path="/allPosts" element={<AllPosts />} />
+          </Route>
 
           <Route
             path="/login"

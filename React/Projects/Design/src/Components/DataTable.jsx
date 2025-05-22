@@ -1,26 +1,26 @@
-import { useState } from "react";
 function DataTable({ userData, className }) {
-  // state for diffrent colours for the row
-  const [rowColour, setRowColour] = useState(true);
-
   return (
     <div className="">
       <table
-        className={`table-auto border-collapse border-2 border-slate-900 ${className}`}
+        className={`table-auto border-collapse border-2 border-slate-50 rounded-md ${className}`}
       >
-        <thead className="border-2 border-slate-700 p-4">
+        <thead className="border-2 bg-slate-800 rounded-sm text-white text-sm p-4">
           <tr className="">
             {Object.keys(...userData).map((item) => (
-              <th className="px-4 py-2 text-left">{item}</th>
+              <th className="px-4 py-3 text-left">{item}</th>
             ))}
           </tr>
         </thead>
 
         <tbody className="">
-          {userData.map((item) => (
-            <tr className={`p-4 ${rowColour ? "bg-blue-600" : "bg-slate-600"}`}>
+          {userData.map((item, index) => (
+            <tr
+              className={`px-4 py-0 text-xs ${
+                index % 2 == 0 ? "bg-slate-50" : "bg-white"
+              }`}
+            >
               {Object.values(item).map((itemChild) => (
-                <td className="p-4">{itemChild}</td>
+                <td className="p-2 py-4">{itemChild}</td>
               ))}
             </tr>
           ))}
