@@ -1,8 +1,8 @@
 function DataTable({ userData, className }) {
   return (
-    <div className="">
+    <div className=" w-full">
       <table
-        className={`table-auto border-collapse border-2 border-slate-50 rounded-md ${className}`}
+        className={`table-auto border-collapse border-2 border-slate-50 rounded-md w-full ${className}`}
       >
         <thead className="border-2 bg-slate-800 rounded-sm text-white text-sm p-4">
           <tr className="">

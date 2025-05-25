@@ -11,9 +11,9 @@ function SideBar({ optionsForSideBar }) {
     setPanelClosed(!panelClosed);
   };
   return (
-    <div className="w-fit bg-white shadow-md flex">
+    <div className="w-fit bg-white shadow-md flex h-screen">
       {/* all options */}
-      <div className={`flex flex-col ${!panelClosed ? "p-1" : "p-4"}`}>
+      <div className={`flex flex-col items-center ${!panelClosed ? "p-1" : "p-4"}`}>
         {/* logic to populate options */}
 
         {/* All users */}

@@ -3,7 +3,7 @@ import DataTable from "../Components/DataTable";
 import { Link, Outlet, Route, Routes } from "react-router";
 import Button from "../Components/Button";
 import { useContext } from "react";
-import { LoginContext } from "../Data/Contexts";
+import { LoginContext, LoginProvider } from "../Data/Contexts";
 import NavbarTop from "../Components/NavbarTop";
 import SideBar from "../Components/SideBar";
 import AllUsers from "../Layouts/AllUsers";
@@ -19,15 +19,11 @@ export default function Home() {
     { title: "Posts", path: "/allPosts", icon: "PermMediaIcon" },
   ];
 
-  // Signout Button Logic
-  const SignOutButton = () => {
-    setLoginCheck(false);
-    console.log("Signout button called!");
-    localStorage.setItem("loginCheck", 0);
-  };
+
 
   return (
-    <div className=" w-screen h-screen flex-col gap-8 bg-blue-100">
+
+         <div className=" w-screen h-screen flex-col gap-8 bg-blue-100">
       {/* Navigation Bar */}
       <div>
         <NavbarTop />
@@ -39,10 +35,12 @@ export default function Home() {
         <div className="w-fit"></div>
         <SideBar options={optionsForSideBar} />
         {/* main panel */}
-        <div className="w-full flex justify-center items-center flex-col">
-          <Outlet />
+        <div className=" flex justify-start items-start flex-col m-4">
+          <Outlet/>
         </div>
       </div>
-    </div>
+    </div> 
+
+
   );
 }
