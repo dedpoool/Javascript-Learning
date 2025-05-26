@@ -72,7 +72,7 @@ function SideBar({ optionsForSideBar, className, ...attributes }) {
           {showSetting && (
             <Options onClick={handleSettingButton} options={optionsSettings} />
           )}
-          <NavLink
+          {/* <NavLink
             to={"/settings"}
             style={({ isActive }) => ({
               color: isActive ? "red" : "black",
@@ -80,14 +80,14 @@ function SideBar({ optionsForSideBar, className, ...attributes }) {
               textDecoration: "none",
               marginRight: "15px",
             })}
-          >
+          > */}
             <div className="flex p-4" onClick={handleSettingButton}>
               <SettingsIcon />
               {panelClosed && (
                 <h1 className="ml-2 w-fit text-nowrap">Settings</h1>
               )}
             </div>
-          </NavLink>
+          {/* </NavLink> */}
         </div>
       </div>
 
