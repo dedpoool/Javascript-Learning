@@ -15,10 +15,14 @@ export default function Login() {
     setLoginCheck,
     loginTextFields,
     setLoginTextFields,
+    currentUserEmail,
+    setCurrentUserEmail,
+    currentUserData,
+    setCurrentUserData,
   } = useContext(LoginContext);
 
   // if the user does not exists
-  const [userExists,setUserExists] =useState(true);
+  const [userExists, setUserExists] = useState(true);
 
   // update date onchange in text field🌕
   const updateLoginData = (e) => {
@@ -45,8 +49,9 @@ export default function Login() {
     if (userTrue) {
       setLoginCheck(true);
       localStorage.setItem("loginCheck", 1);
-    }
-    else{
+      setCurrentUserEmail(loginTextFields.email);
+      setCurrentUserData({ ...currentUserData, email: loginTextFields.email });
+    } else {
       setUserExists(false);
     }
   };
@@ -55,7 +60,7 @@ export default function Login() {
     <div className="flex w-screen h-screen">
       {/* Image Container */}
       <div className="w-1/2 bg-black">
-      <img className="size-full" src={blueBG} alt="" />
+        <img className="size-full" src={blueBG} alt="" />
       </div>
 
       {/* Data container */}
@@ -76,8 +81,8 @@ export default function Login() {
         >
           {/* email */}
           <TextField
-          underLabel={!userExists && "User Email does not exists!"}
-          errorCode={!userExists ? 'red':'normal'}
+            underLabel={!userExists && "User Email does not exists!"}
+            errorCode={!userExists ? "red" : "normal"}
             onChange={updateLoginData}
             className="w-full"
             placeholder="Email"

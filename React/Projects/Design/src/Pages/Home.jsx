@@ -19,28 +19,23 @@ export default function Home() {
     { title: "Posts", path: "/allPosts", icon: "PermMediaIcon" },
   ];
 
-
-
   return (
-
-         <div className=" w-screen h-screen flex-col gap-8 bg-blue-100">
+    <div className=" w-screen h-screen flex-col gap-8 bg-blue-100 overflow-hidden">
       {/* Navigation Bar */}
       <div>
         <NavbarTop />
       </div>
 
       {/* down layout */}
-      <div className="flex ">
+      <div className="flex h-full">
         {/* side bar */}
-        <div className="w-fit"></div>
-        <SideBar options={optionsForSideBar} />
+        <div className="w-fit h-full"></div>
+        <SideBar className="h-4/5" options={optionsForSideBar} />
         {/* main panel */}
         <div className=" flex justify-start items-start flex-col m-4">
-          <Outlet/>
+          <Outlet />
         </div>
       </div>
-    </div> 
-
-
+    </div>
   );
 }

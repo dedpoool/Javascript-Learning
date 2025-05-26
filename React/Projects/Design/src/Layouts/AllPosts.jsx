@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import dog from "../Assets/Test Images/dog.jpg";
+
 // import ImageUploader from "../Components/ImageUploader";
 function AllPosts() {
   return (

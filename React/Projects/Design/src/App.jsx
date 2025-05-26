@@ -3,6 +3,9 @@ import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import SignIn from "./Pages/SignIn";
 import AllUsers from "./Layouts/AllUsers";
+import Settings from "./Layouts/Settings";
+import Dashboard from "./Layouts/Dashboard";
+import ProfileSettings from "./Layouts/ProfileSettings";
 import { LoginContext, LoginProvider } from "./Data/Contexts";
 import {
   Route,
@@ -64,6 +67,23 @@ export default function App() {
     },
   ]);
 
+  // Current User
+  const [currentUserEmail, setCurrentUserEmail] = useState("");
+
+  // Current User Data
+  const [currentUserData, setCurrentUserData] = useState({
+    firstName: "test",
+    lastName: "name",
+    age: "",
+    address: "",
+    city: "",
+    pincode: "",
+    state: "",
+    country: "",
+    email: "test@gamil.com",
+    password: "",
+  });
+
   // text field data for login
   const [loginTextFields, setLoginTextFields] = useState({
     email: "",
@@ -94,6 +114,10 @@ export default function App() {
         setLoginTextFields,
         signUpTextFields,
         setSignUpTextFields,
+        currentUserEmail,
+        setCurrentUserEmail,
+        currentUserData,
+        setCurrentUserData,
       }}
     >
       <Router>
@@ -106,13 +130,18 @@ export default function App() {
           >
             <Route path="/allUsers" element={<AllUsers />} />
             <Route path="/allPosts" element={<AllPosts />} />
-          </Route>
-
+            <Route path="/settings" element={<Settings />}>
+              <Route
+                path="/settings/profileSettings"
+                element={<ProfileSettings />}
+              />
+            </Route>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>{" "}
           <Route
             path="/login"
             element={loginCheck === true ? <Navigate to={"/"} /> : <Login />}
           ></Route>
-
           <Route path="/signUp" element={<SignIn />}></Route>
           <Route path="/*" element={<ErrorPage />}></Route>
         </Routes>

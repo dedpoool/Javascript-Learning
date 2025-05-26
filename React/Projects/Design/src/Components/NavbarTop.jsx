@@ -4,16 +4,14 @@ import Button from "./Button";
 import { LogOut } from "lucide-react";
 import { LoginContext } from "../Data/Contexts";
 function NavbarTop() {
+  const { setLoginCheck } = useContext(LoginContext);
 
-  const {setLoginCheck} = useContext(LoginContext);
-
-      // Signout Button Logic
+  // Signout Button Logic
   const SignOutButton = () => {
     setLoginCheck(false);
     console.log("Signout button called!");
     localStorage.setItem("loginCheck", 0);
   };
-
 
   return (
     <div className="h-fit bg-cyan-950 flex justify-between align-middle">
@@ -24,9 +22,14 @@ function NavbarTop() {
       </div>
 
       <div className="flex align-middle">
-        <Button className="hover: rounded-full p-4 bg-inherit items-center flex" onClick={SignOutButton} theme="dark">
-        Signout<LogOut size={20} className="ml-4" />
-      </Button>
+        <Button
+          className="hover: rounded-full p-4 bg-cyan-950 items-center flex"
+          onClick={SignOutButton}
+          theme="dark"
+        >
+          Signout
+          <LogOut size={20} className="ml-4" />
+        </Button>
       </div>
     </div>
   );
