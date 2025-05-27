@@ -50,7 +50,21 @@ export default function Login() {
       setLoginCheck(true);
       localStorage.setItem("loginCheck", 1);
       setCurrentUserEmail(loginTextFields.email);
-      setCurrentUserData({ ...currentUserData, email: loginTextFields.email });
+
+      // gettting the current user data
+      const currentUserDataFind = userData.find(
+        (item) => item.email === loginTextFields.email
+      );
+
+      console.log("This is the data we found: ", currentUserDataFind);
+
+      setCurrentUserData(currentUserDataFind);
+
+      const indexOfValue = userData.findIndex(
+        (item) => item.email === loginTextFields.email
+      );
+
+      setCurrentUserData({ ...currentUserDataFind, index: indexOfValue });
     } else {
       setUserExists(false);
     }

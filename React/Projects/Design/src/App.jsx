@@ -82,6 +82,7 @@ export default function App() {
     country: "",
     email: "test@gamil.com",
     password: "",
+    index: null,
   });
 
   // text field data for login

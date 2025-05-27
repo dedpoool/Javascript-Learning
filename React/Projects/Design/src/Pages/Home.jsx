@@ -32,7 +32,7 @@ export default function Home() {
         <div className="w-fit h-full"></div>
         <SideBar className="h-4/5" options={optionsForSideBar} />
         {/* main panel */}
-        <div className=" flex justify-start items-start flex-col m-4">
+        <div className=" flex justify-start items-start flex-col m-4 w-screen h-full">
           <Outlet />
         </div>
       </div>

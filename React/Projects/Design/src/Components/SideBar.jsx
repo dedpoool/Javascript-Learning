@@ -81,12 +81,12 @@ function SideBar({ optionsForSideBar, className, ...attributes }) {
               marginRight: "15px",
             })}
           > */}
-            <div className="flex p-4" onClick={handleSettingButton}>
-              <SettingsIcon />
-              {panelClosed && (
-                <h1 className="ml-2 w-fit text-nowrap">Settings</h1>
-              )}
-            </div>
+          <div className="flex p-4" onClick={handleSettingButton}>
+            <SettingsIcon />
+            {panelClosed && (
+              <h1 className="ml-2 w-fit text-nowrap">Settings</h1>
+            )}
+          </div>
           {/* </NavLink> */}
         </div>
       </div>
