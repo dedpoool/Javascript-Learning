@@ -55,11 +55,7 @@ export default function Login() {
       const currentUserDataFind = userData.find(
         (item) => item.email === loginTextFields.email
       );
-
-      console.log("This is the data we found: ", currentUserDataFind);
-
-      setCurrentUserData(currentUserDataFind);
-
+      // Getting the current user index
       const indexOfValue = userData.findIndex(
         (item) => item.email === loginTextFields.email
       );

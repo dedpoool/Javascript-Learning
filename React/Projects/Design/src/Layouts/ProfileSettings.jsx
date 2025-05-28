@@ -14,23 +14,32 @@ function ProfileSettings() {
   console.log("current user data: ", currentUserData);
 
   const [updatedUserData, setUpdatedUserData] = useState({
-    firstName: "",
-    lastName: "",
-    age: "",
-    address: "",
-    city: "",
-    pincode: "",
-    state: "",
-    country: "",
-    email: "",
-    password: "",
+    firstName: currentUserData.firstName,
+    lastName: currentUserData.lastName,
+    age: currentUserData.age,
+    address: currentUserData.address,
+    city: currentUserData.city,
+    pincode: currentUserData.pincode,
+    state: currentUserData.state,
+    country: currentUserData.country,
+    email: currentUserData.email,
+    password: currentUserData.password,
   });
+
+  console.log("the updated profile values: ", updatedUserData);
+  console.log("all userData: ", userData);
 
   // button clik to update user profile
   const updateUserProfile = () => {
     // copy of user data
-    const userDataCopy = { ...userData };
-    userDataCopy[currentUserData.index] = setUpdatedUserData;
+    const userDataCopy = [...userData];
+
+    // index to where the data should update
+    const updateIndex = currentUserData.index;
+    console.log("value of userDataCopy: ", userDataCopy);
+    console.log("This is the index: ", currentUserData.index);
+
+    userDataCopy[updateIndex] = updatedUserData;
     setUserData(userDataCopy);
   };
 
@@ -42,6 +51,13 @@ function ProfileSettings() {
   //   edit button handle
   const handleEditButton = () => {
     setEditProfile(!editProfile);
+  };
+
+  // handle textfield on change
+  const updateProfile = (e) => {
+    const updatedName = e.target.name;
+    const updatedValue = e.target.value;
+    setUpdatedUserData({ ...updatedUserData, [updatedName]: updatedValue });
   };
 
   //   Normal data show
@@ -82,30 +98,47 @@ function ProfileSettings() {
       {/* text fields */}
       {/* names */}
       <div className="flex gap-x-2 pt-4">
-        <TextField name="firstName" value={currentUserData.firstName} />
-        <TextField name="lastName" value={currentUserData.lastName} />
+        <TextField
+          onChange={(e) => updateProfile(e)}
+          name="firstName"
+          value={updatedUserData.firstName}
+        />
+        <TextField
+          onChange={(e) => updateProfile(e)}
+          name="lastName"
+          value={updatedUserData.lastName}
+        />
       </div>
       {/* email */}
       <TextField
         name="email"
+        onChange={(e) => updateProfile(e)}
         className="w-full"
-        value={currentUserData.email}
+        value={updatedUserData.email}
       />
       <TextField
         name="address"
+        onChange={(e) => updateProfile(e)}
         className="w-full"
-        value={currentUserData.address}
+        value={updatedUserData.address}
       />
-      <TextField name="city" className="w-full" value={currentUserData.city} />
+      <TextField
+        name="city"
+        onChange={(e) => updateProfile(e)}
+        className="w-full"
+        value={updatedUserData.city}
+      />
       <TextField
         name="state"
+        onChange={(e) => updateProfile(e)}
         className="w-full"
-        value={currentUserData.state}
+        value={updatedUserData.state}
       />
       <TextField
         name="pincode"
+        onChange={(e) => updateProfile(e)}
         className="w-full"
-        value={currentUserData.pincode}
+        value={updatedUserData.pincode}
       />
       <div></div>
     </div>

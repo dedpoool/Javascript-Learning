@@ -33,7 +33,7 @@ export default function App() {
       firstName: "Vishal",
       lastName: "Yadav",
       age: "29",
-      address: "#2059, sector 28",
+      address: "#2059 sector 28",
       city: "Panchkula",
       pincode: "134109",
       state: "Haryana",
